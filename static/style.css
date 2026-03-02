@@ -1,0 +1,108 @@
+.center {
+  margin:auto;
+  text-align: center;
+}
+
+.pages {
+  margin:auto;
+  text-align: center;
+}
+
+body{
+  margin-top: 5%;
+  margin-left: 7%;
+  margin-right: 7%;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+
+}
+
+.header {
+  margin-bottom: 2.5%;
+}
+
+a.button {
+  padding: 2px 12px;
+  border: 1px outset buttonborder;
+  border-radius: 3px;
+  color: buttontext;
+  background-color: buttonface;
+  text-decoration: none;
+  font-size: 20px;
+  margin-left: .5%;
+  margin-right: .5%;
+  background-color: lightblue;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+
+}
+
+a.button:hover {
+  color: black;
+  background-color: rgb(104, 149, 163);
+  border-color: rgb(104, 149, 163);
+  transition: 0.35s;
+}
+
+h1.title {
+  font-size: 50px;
+  margin-bottom: 1%;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+}
+
+.profile {
+  width: 75%;
+  margin-top: 5%;
+}
+
+.twosections {
+  display: flex;
+}
+
+#col1 {
+  flex: 1;
+  align-items: center;
+}
+
+#col2 {
+  flex: 3;
+}
+
+.bottom {
+  margin-left: 10%;
+}
+
+
+
+.card {
+  /* border: 1px solid #ccc; */
+  padding: 40px;
+  margin-bottom: 0px;
+  max-width: 1000px;
+  align-items: center;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.date {
+  color: #666;
+  font-size: 0.9em;
+}
+
+.summary {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.authors {
+  font-size: 1em;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.publisher {
+  font-size: 1em;
+  color: #666;
+  margin-bottom: 8px;
+}

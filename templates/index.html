@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USGS</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <header class="header">
+        <div>
+            <h1 class="center title">Charles A Cravotta, III, Ph.D.</h1>
+        </div>
+        <div class="pages">
+            <a href="{{ url_for('index') }}" class="button">Biography</a>
+            <a href="{{ url_for('software') }}" class="button">Software</a>
+            <a href="{{ url_for('news') }}" class="button">News</a>
+            <a href="{{ url_for('projects') }}" class="button">Projects</a>
+        </div>
+    
+    </header>
+
+    <div>
+        <section class="twosections">
+            <div id="col1" >
+                <img src='/static/profilePhoto.jpg' class="profile" alt="Profile Photo">
+            </div>
+
+            <div id="col2">
+                <h4>About</h4>
+                <p>Hydrologist/Geochemist at Cravotta Geochemical Consulting</p>
+                <p>Charles A. “Chuck” Cravotta III is an internationally recognized scientist with over four decades of professional experience, primarily with the U.S. Geological Survey (USGS). He served as a research hydrologist at the USGS Pennsylvania Water Science Center from 1987 until his retirement from civil service in 2023. His work has focused on geochemical and hydrological processes that control water quality, including the sources, transport, and attenuation of metals and nutrients in both undisturbed and mining-impacted watersheds and aquifers. He continues such environmental work through Cravotta Geochemical Consulting, where he applies his expertise to address environmental challenges related to water quality and geochemistry.</p>
+                <p>Dr. Cravotta’s research integrates field, laboratory, and computer modeling methods. He is considered an expert on acid mine drainage (AMD) and is renowned for the development of geochemical modeling tools, such as PHREEQ-N-AMDTreat, which simulate changes in water quality during passive and active treatment of AMD. His research has also explored the potential recovery of rare earth elements from AMD treatment wastes. His extensive publication record includes numerous peer-reviewed articles on AMD, groundwater quality, and environmental remediation.</p>
+                <p>Dr. Cravotta holds a Ph.D. in Geochemistry and a B.A. in Environmental Sciences. He is a registered professional geologist in Pennsylvania and has served as an adjunct faculty member at the University of Pittsburgh and Pennsylvania State University.</p>
+            </div>
+        </section>
+
+        <section class="bottom">
+            <a href="{{ url_for('static', filename='Cravotta_CV.pdf') }}" target="_blank">
+                <h4>View My CV</h4>
+            </a>
+            <a href="{{ url_for('static', filename='Cravotta_biblio.pdf') }}" target="_blank">
+                <h4>View My Bibliography</h4>
+            </a>
+        </section>
+        
+    </div>
+
+
+</body>
