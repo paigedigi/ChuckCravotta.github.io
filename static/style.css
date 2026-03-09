@@ -20,10 +20,13 @@ body{
 
 .header {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: auto auto;
   grid-template-rows: auto auto;
   align-items: center;
-  margin-bottom: 2.5%;
+  gap: 10px;
+
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 /* Title (row 1, col 1) */
@@ -41,8 +44,9 @@ body{
 /* Logo spans both rows on right */
 .logo {
   grid-column: 2;
-  grid-row: 1 / 3;   /* spans 2 rows */
-  height: 100px;     /* adjust as needed */
+  grid-row: 1 / 3;
+  max-height: 120px;
+  width: auto;
 }
 
 
@@ -131,4 +135,29 @@ h1.title {
   font-size: 1em;
   color: #666;
   margin-bottom: 8px;
+}
+
+@media (max-width: 700px) {
+
+  .header {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto auto;
+      text-align: center;
+  }
+
+  .logo {
+      grid-column: 1;
+      grid-row: 1;
+      max-height: 80px;
+      margin: 0 auto;
+  }
+
+  .title {
+      grid-row: 2;
+  }
+
+  .pages {
+      grid-row: 3;
+  }
+
 }
