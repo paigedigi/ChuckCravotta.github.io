@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>News</title>
     <link rel="stylesheet" href="static/style.css">
-    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
 </head>
 
 <body>
@@ -22,84 +22,87 @@
     </header>
 
     <input
-    type="text"
-    id="search"
-    placeholder="Search title, date, summary..."
-    style="margin-bottom: 16px; width: 300px;"
+        type="text"
+        id="search"
+        placeholder="Search title, date, summary..."
+        style="margin-bottom: 16px; width: 300px;"
     >
-    <div id="container"></div>
-
+        <div id="container"></div>
+    
     <script>
         let allRows = [];
-        Papa.parse("static/news.csv", {
-            download: true,
-            header: true,
-            complete: function (results) {
-                allRows = results.data.filter(r => r.Title);
-                render(allRows);
-            }
+        
+        fetch("static/Cravotta_biblio.xlsx")
+        .then(response => response.arrayBuffer())
+        .then(data => {
+            const workbook = XLSX.read(data, { type: "array" });
+
+            // choose sheet by name
+            const sheetName = "CGC_news";   // ← change this to your sheet tab name
+            const sheet = workbook.Sheets[sheetName];
+
+            allRows = XLSX.utils.sheet_to_json(sheet).filter(r => r.Title);
+
+            render(allRows);
         });
-
-
+        
+        
         document.getElementById("search").addEventListener("input", function () {
             const words = this.value.toLowerCase().split(/\s+/).filter(Boolean);
-
+        
             const filtered = allRows.filter(row => {
                 const searchableText = `
                 ${row.Title}
                 ${row.Date}
-                ${row.Summary}
+                ${row.Keywords}
                 ${row.Authors}
                 ${row.Publisher}
                 `.toLowerCase();
-
-                // every word must match somewhere
+        
                 return words.every(word => searchableText.includes(word));
             });
-
+        
             render(filtered);
         });
-
+        
+        
         function render(rows) {
             const container = document.getElementById("container");
             container.innerHTML = "";
-
+        
             rows.forEach(row => {
                 const card = document.createElement("div");
                 card.className = "card";
-
+        
                 const title = document.createElement("div");
                 title.className = "title";
                 title.textContent = row.Title;
-
+        
                 const date = document.createElement("div");
                 date.className = "date";
                 date.textContent = row.Date;
-
+        
                 const summary = document.createElement("div");
                 summary.className = "summary";
                 summary.textContent = row.Summary;
-
+        
                 const authors = document.createElement("div");
                 authors.className = "authors";
-                authors.textContent = 'Authors: ' + row.Authors;
-
+                authors.textContent = "Authors: " + row.Authors;
+        
                 const publisher = document.createElement("div");
                 publisher.className = "publisher";
-                publisher.textContent = 'By: ' + row.Publisher;
-
+                publisher.textContent = "By: " + row.Publisher;
+        
                 card.appendChild(title);
                 card.appendChild(date);
                 card.appendChild(summary);
                 card.appendChild(authors);
                 card.appendChild(publisher);
-
+        
                 container.appendChild(card);
-
             });
         }
-
-
     </script>
 
 
