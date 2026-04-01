@@ -37,8 +37,7 @@
         .then(data => {
             const workbook = XLSX.read(data, { type: "array" });
 
-            // choose sheet by name
-            const sheetName = "CGC_news";   // ← change this to your sheet tab name
+            const sheetName = "CGC_news";
             const sheet = workbook.Sheets[sheetName];
 
             allRows = XLSX.utils.sheet_to_json(sheet).filter(r => r.Title);

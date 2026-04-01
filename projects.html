@@ -31,7 +31,7 @@
     <input
         type="text"
         id="search"
-        placeholder="Search title, date, summary..."
+        placeholder="Search topic, year, client..."
         style="margin-bottom: 16px; width: 300px;"
     >
         <div id="container"></div>
@@ -44,8 +44,7 @@
         .then(data => {
             const workbook = XLSX.read(data, { type: "array" });
 
-            // choose sheet by name
-            const sheetName = "CGC_projects";   // ← change this to your sheet tab name
+            const sheetName = "CGC_projects";
             const sheet = workbook.Sheets[sheetName];
 
             allRows = XLSX.utils.sheet_to_json(sheet).filter(r => r.Title);
