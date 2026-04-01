@@ -114,7 +114,10 @@ a.button:hover {
   align-items: center;
 }
 
-
+.projecttitle {
+  font-size: 24px;
+  font-weight: 600;
+}
 
 .date {
   color: #666;
