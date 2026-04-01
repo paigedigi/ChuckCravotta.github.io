@@ -43,7 +43,6 @@
             const sheet = workbook.Sheets[sheetName];
 
             allRows = XLSX.utils.sheet_to_json(sheet).filter(r => r.Title);
-            console.log("Filtered rows:", allRows);
 
             render(allRows);
         });
