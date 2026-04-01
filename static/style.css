@@ -20,33 +20,42 @@ body{
 
 .header {
   display: grid;
-  grid-template-columns: auto auto;
-  grid-template-rows: auto auto;
+  grid-template-columns: auto 1fr auto; /* logo | title | buttons */
+  grid-template-rows: auto;
   align-items: center;
   gap: 10px;
-
-  max-width: 900px;
   margin: 0 auto;
+  margin-bottom: 3%;
+  padding: 0 10px;
 }
 
-/* Title (row 1, col 1) */
-.title {
+/* ----- Logo ----- */
+.logo {
   grid-column: 1;
   grid-row: 1;
-}
-
-/* Buttons (row 2, col 1) */
-.pages {
-  grid-column: 1;
-  grid-row: 2;
-}
-
-/* Logo spans both rows on right */
-.logo {
-  grid-column: 2;
-  grid-row: 1 / 3;
-  max-height: 120px;
+  max-height: 120px;        /* large screens */
   width: auto;
+}
+
+/* ----- Title ----- */
+.title {
+  grid-column: 2;
+  grid-row: 1;
+  font-size: clamp(24px, 5vw, 50px); /* scales with screen */
+  font-weight: bold;
+  max-width: 600px;          /* prevents overflowing */
+  margin: 0 auto;
+  text-align: center;
+  word-break: break-word;     /* wrap long titles */
+}
+
+/* ----- Buttons ----- */
+.pages {
+  grid-column: 3;
+  grid-row: 1;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
 }
 
 
@@ -72,11 +81,6 @@ a.button:hover {
   transition: 0.35s;
 }
 
-h1.title {
-  font-size: 50px;
-  margin-bottom: 1%;
-  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
-}
 
 .profile {
   width: 75%;
@@ -110,10 +114,7 @@ h1.title {
   align-items: center;
 }
 
-.title {
-  font-weight: bold;
-  font-size: 1.2em;
-}
+
 
 .date {
   color: #666;
@@ -137,27 +138,30 @@ h1.title {
   margin-bottom: 8px;
 }
 
-@media (max-width: 700px) {
-
+/* ----- Responsive for Small Screens ----- */
+@media (max-width: 768px) {
   .header {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto auto auto;
-      text-align: center;
+    grid-template-columns: 1fr;  /* single column */
+    grid-template-rows: auto auto auto;
+    text-align: center;
   }
 
   .logo {
-      grid-column: 1;
-      grid-row: 1;
-      max-height: 80px;
-      margin: 0 auto;
+    grid-column: 1;
+    grid-row: 1;
+    max-height: 80px;          /* shrink logo on mobile */
+    margin: 0 auto;
   }
 
   .title {
-      grid-row: 2;
+    grid-column: 1;
+    grid-row: 2;
+    font-size: clamp(20px, 8vw, 40px); /* smaller max for mobile */
   }
 
   .pages {
-      grid-row: 3;
+    grid-column: 1;
+    grid-row: 3;
+    justify-content: center;    /* center buttons */
   }
-
 }
