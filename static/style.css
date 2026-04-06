@@ -141,6 +141,12 @@ a.button:hover {
   margin-bottom: 8px;
 }
 
+.link {
+  font-size: 1em;
+  color: #666;
+  margin-bottom: 8px;
+}
+
 /* ----- Responsive for Small Screens ----- */
 @media (max-width: 768px) {
   .header {
