@@ -95,9 +95,11 @@
                 publisher.className = "publisher";
                 publisher.textContent = "By: " + row.Publisher;
 
-                const link = document.createElement("div");
+                const link = document.createElement("a");
                 link.className = "link";
-                link.textContent = row.Link;
+                link.href = row.Link;
+                link.textContent = "Read more";
+                link.target = "_blank";
         
                 card.appendChild(title);
                 card.appendChild(date);
