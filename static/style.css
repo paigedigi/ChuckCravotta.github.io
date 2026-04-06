@@ -147,6 +147,31 @@ a.button:hover {
   margin-bottom: 8px;
 }
 
+
+
+.topic {
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.year {
+  color: #666;
+  font-size: 0.9em;
+}
+
+.role {
+  font-size: 1em;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.client {
+  font-size: 1em;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+
 /* ----- Responsive for Small Screens ----- */
 @media (max-width: 768px) {
   .header {
