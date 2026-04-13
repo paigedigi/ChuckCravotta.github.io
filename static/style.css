@@ -173,6 +173,12 @@ a.button:hover {
   margin-bottom: 8px;
 }
 
+.softwaredownload {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 
 /* ----- Responsive for Small Screens ----- */
 @media (max-width: 768px) {
