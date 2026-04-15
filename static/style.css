@@ -197,14 +197,14 @@ a.button:hover {
   box-shadow: 0 6px 16px rgba(0,0,0,0.10);
 }
 
-.news-card a {
+.newslink {
   margin-top: auto;
   text-decoration: none;
   font-weight: 500;
   color: #cc6600;
 }
 
-.news-card a:hover {
+.newslink:hover {
   text-decoration: underline;
 }
 
