@@ -197,6 +197,17 @@ a.button:hover {
   box-shadow: 0 6px 16px rgba(0,0,0,0.10);
 }
 
+.news-card a {
+  margin-top: auto;
+  text-decoration: none;
+  font-weight: 500;
+  color: #cc6600;
+}
+
+.news-card a:hover {
+  text-decoration: underline;
+}
+
 .newstitle {
   font-weight: 600;
   font-size: 1.05rem;

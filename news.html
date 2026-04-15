@@ -60,6 +60,7 @@
                     ${row.Keywords}
                     ${row.Authors}
                     ${row.Publisher}
+                    ${row.Link}
                     `.toLowerCase();
             
                     return words.every(word => searchableText.includes(word));
@@ -96,12 +97,19 @@
                     const publisher = document.createElement("div");
                     publisher.className = "publisher";
                     publisher.textContent = "By: " + row.Publisher;
+
+                    const link = document.createElement("a");
+                    link.className = "link";
+                    link.href = row.Link;
+                    link.textContent = "Read more";
+                    link.target = "_blank";
             
                     card.appendChild(title);
                     card.appendChild(date);
                     card.appendChild(summary);
                     card.appendChild(authors);
                     card.appendChild(publisher);
+                    card.appendChild(link);
             
                     container.appendChild(card);
                 });
