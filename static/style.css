@@ -7,34 +7,81 @@
   margin:auto;
   text-align: center;
 }
+body {
+  font-family:
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      Helvetica,
+      Arial,
+      sans-serif;
 
-body{
-  margin-top: 5%;
-  background-color: rgb(244, 232, 210);
-  margin-left: 7%;
-  margin-right: 7%;
-  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+  line-height: 1.6;
+  background-color: #fde6cc;
+}
 
+h1 {
+  font-size: 2.2rem;
+  margin-bottom: 5px;
+}
+
+h2 {
+  margin-top: 40px;
+}
+
+nav {
+  margin-top: 10px;
+  display: flex;
+  gap: 25px;
+}
+
+nav a {
+  text-decoration: none;
+  font-weight: 500;
+  color: #444;
+}
+
+nav a:hover {
+  color: #cc6600;
 }
 
 
 .header {
-  display: grid;
-  grid-template-columns: auto 1fr auto; /* logo | title | buttons */
-  grid-template-rows: auto;
+  display: flex;
   align-items: center;
-  gap: 10px;
-  margin: 0 auto;
-  margin-bottom: 3%;
-  padding: 0 10px;
+  justify-content: space-between;
+  flex-direction: column;
+  padding: 20px 40px;
+  background-color: #f7eddf;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  margin-bottom: 5%;
+}
+
+.title-area {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.title-area h1 {
+  white-space: nowrap;
 }
 
 /* ----- Logo ----- */
 .logo {
   grid-column: 1;
   grid-row: 1;
-  max-height: 120px;        /* large screens */
+  max-height: 120px; 
   width: auto;
+}
+
+main {
+  max-width: 900px;
+  margin: auto;
+  padding: 30px;
+  background-color: #fff6ea;
+  border-radius: 12px;
 }
 
 /* ----- Title ----- */
@@ -82,37 +129,49 @@ a.button:hover {
 }
 
 
-.profile {
-  width: 75%;
-  margin-top: 5%;
-}
-
-.twosections {
+.bio-layout {
   display: flex;
+  gap: 40px;
+  align-items: flex-start;
 }
 
-#col1 {
-  flex: 1;
-  align-items: center;
+.profile-sidebar {
+  width: 340px;
+  text-align: center;
 }
 
-#col2 {
-  flex: 3;
+.profile-photo {
+  width: 100%;
+  border-radius: 10px;
 }
 
-.bottom {
-  margin-left: 10%;
+.profile-links {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.profile-links a {
+  text-decoration: none;
+  font-weight: 500;
+  color: #cc6600;
+}
+
+.bio-text {
+  max-width: 650px;
 }
 
 
 
 .card {
-  /* border: 1px solid #ccc; */
-  padding: 40px;
-  margin-bottom: 0px;
-  max-width: 1000px;
-  align-items: center;
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.05);
 }
+
 
 
 
@@ -139,29 +198,31 @@ a.button:hover {
 }
 
 /* ----- Responsive for Small Screens ----- */
-@media (max-width: 768px) {
+@media (max-width: 700px) {
+
   .header {
-    grid-template-columns: 1fr;  /* single column */
-    grid-template-rows: auto auto auto;
-    text-align: center;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
   }
 
-  .logo {
-    grid-column: 1;
-    grid-row: 1;
-    max-height: 80px;          /* shrink logo on mobile */
-    margin: 0 auto;
+  nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
   }
 
-  .title {
-    grid-column: 1;
-    grid-row: 2;
-    font-size: clamp(20px, 8vw, 40px); /* smaller max for mobile */
+  .bio-layout {
+    flex-direction: column;
+    align-items: center;
   }
 
-  .pages {
-    grid-column: 1;
-    grid-row: 3;
-    justify-content: center;    /* center buttons */
+  .bio-text {
+      text-align: left;
   }
+
+  .profile-sidebar {
+    width: 220px;
+}
+
 }

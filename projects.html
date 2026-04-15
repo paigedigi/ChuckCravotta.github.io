@@ -7,99 +7,103 @@
     <link rel="stylesheet" href="static/style.css">
 </head>
 
-<body>
-    <header class="header">
-        <div>
-            <h1 class="center title">Cravotta Geochemical Consulting, LLC (CGC)</h1>
-        </div>
-        <div class="pages">
-            <a href="index.html" class="button">Biography</a>
-            <a href="software.html" class="button">Software</a>
-            <a href="news.html" class="button">News</a>
-        </div>
-        <img src='static/logo.jpg' class="logo" alt="Logo">
-    </header>
+<main>
+    <body>
+        <header class="header">
+            <div class="title-area">
+                <img src="static/logo.jpg" class="logo">
+                <h1>Cravotta Geochemical Consulting</h1>
+            </div>
+        
+            <nav>
+                <a href="index.html">Biography</a>
+                <a href="software.html">Software</a>
+                <a href="projects.html">Projects</a>
+                <a href="news.html">News</a>
+            </nav>
+        </header>
 
-    <input
-    type="text"
-    id="searchProjects"
-    placeholder=""
-    style="margin-bottom: 16px; width: 300px;"
-    >
-    <div id="containerProjects"></div>
+        <input
+        type="text"
+        id="searchProjects"
+        placeholder=""
+        style="margin-bottom: 16px; width: 300px;"
+        >
+        <div id="containerProjects"></div>
 
-    <script>
-        let allRows = [];
-        Papa.parse("static/projects.csv", {
-            download: true,
-            header: true,
-            complete: function (results) {
-                allRows = results.data.filter(r => r.Title);
-                render(allRows);
+        <script>
+            let allRows = [];
+            Papa.parse("static/projects.csv", {
+                download: true,
+                header: true,
+                complete: function (results) {
+                    allRows = results.data.filter(r => r.Title);
+                    render(allRows);
+                }
+            });
+
+
+            document.getElementById("searchProjects").addEventListener("input", function () {
+                const words = this.value.toLowerCase().split(/\s+/).filter(Boolean);
+
+                const filtered = allRows.filter(row => {
+                    const searchableText = `
+                    ${row.Title}
+                    ${row.Date}
+                    ${row.Summary}
+                    ${row.Authors}
+                    ${row.Publisher}
+                    `.toLowerCase();
+
+                    // every word must match somewhere
+                    return words.every(word => searchableText.includes(word));
+                });
+
+                render(filtered);
+            });
+
+            function render(rows) {
+                const container = document.getElementById("containerProjects");
+                container.innerHTML = "";
+
+                rows.forEach(row => {
+                    const card = document.createElement("div");
+                    card.className = "card";
+
+                    const title = document.createElement("div");
+                    title.className = "title";
+                    title.textContent = row.Title;
+
+                    const date = document.createElement("div");
+                    date.className = "date";
+                    date.textContent = row.Date;
+
+                    const summary = document.createElement("div");
+                    summary.className = "summary";
+                    summary.textContent = row.Summary;
+
+                    const authors = document.createElement("div");
+                    authors.className = "authors";
+                    authors.textContent = 'Authors: ' + row.Authors;
+
+                    const publisher = document.createElement("div");
+                    publisher.className = "publisher";
+                    publisher.textContent = 'By: ' + row.Publisher;
+
+                    card.appendChild(title);
+                    card.appendChild(date);
+                    card.appendChild(summary);
+                    card.appendChild(authors);
+                    card.appendChild(publisher);
+
+                    container.appendChild(card);
+
+                });
             }
-        });
 
 
-        document.getElementById("searchProjects").addEventListener("input", function () {
-            const words = this.value.toLowerCase().split(/\s+/).filter(Boolean);
-
-            const filtered = allRows.filter(row => {
-                const searchableText = `
-                ${row.Title}
-                ${row.Date}
-                ${row.Summary}
-                ${row.Authors}
-                ${row.Publisher}
-                `.toLowerCase();
-
-                // every word must match somewhere
-                return words.every(word => searchableText.includes(word));
-            });
-
-            render(filtered);
-        });
-
-        function render(rows) {
-            const container = document.getElementById("containerProjects");
-            container.innerHTML = "";
-
-            rows.forEach(row => {
-                const card = document.createElement("div");
-                card.className = "card";
-
-                const title = document.createElement("div");
-                title.className = "title";
-                title.textContent = row.Title;
-
-                const date = document.createElement("div");
-                date.className = "date";
-                date.textContent = row.Date;
-
-                const summary = document.createElement("div");
-                summary.className = "summary";
-                summary.textContent = row.Summary;
-
-                const authors = document.createElement("div");
-                authors.className = "authors";
-                authors.textContent = 'Authors: ' + row.Authors;
-
-                const publisher = document.createElement("div");
-                publisher.className = "publisher";
-                publisher.textContent = 'By: ' + row.Publisher;
-
-                card.appendChild(title);
-                card.appendChild(date);
-                card.appendChild(summary);
-                card.appendChild(authors);
-                card.appendChild(publisher);
-
-                container.appendChild(card);
-
-            });
-        }
+        </script>
 
 
-    </script>
-
-
-</body>
+    </body>
+</main>
