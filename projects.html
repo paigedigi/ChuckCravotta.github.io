@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projects</title>
     <link rel="stylesheet" href="static/style.css">
+    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
 </head>
 
 <body>
@@ -16,89 +17,88 @@
             <a href="index.html" class="button">Biography</a>
             <a href="software.html" class="button">Software</a>
             <a href="news.html" class="button">News</a>
+            <a href="projects.html" class="button">Projects</a>
         </div>
         <img src='static/logo.jpg' class="logo" alt="Logo">
     </header>
 
-    <input
-    type="text"
-    id="searchProjects"
-    placeholder=""
-    style="margin-bottom: 16px; width: 300px;"
-    >
-    <div id="containerProjects"></div>
 
+    <input
+        type="text"
+        id="searchProject"
+        placeholder="Search topic, year, client..."
+        style="margin-bottom: 16px; width: 300px;"
+    >
+        <div id="projectcontatiner"></div>
+    
     <script>
         let allRows = [];
-        Papa.parse("static/projects.csv", {
-            download: true,
-            header: true,
-            complete: function (results) {
-                allRows = results.data.filter(r => r.Title);
-                render(allRows);
-            }
+        
+        fetch("static/Cravotta_biblio.xlsx")
+        .then(response => response.arrayBuffer())
+        .then(data => {
+            const workbook = XLSX.read(data, { type: "array" });
+
+            const sheetName = "CGC_projects";
+            const sheet = workbook.Sheets[sheetName];
+
+            allRows = XLSX.utils.sheet_to_json(sheet).filter(r => r.Topic);
+
+            render(allRows);
         });
-
-
-        document.getElementById("searchProjects").addEventListener("input", function () {
+        
+        
+        document.getElementById("searchProject").addEventListener("input", function () {
             const words = this.value.toLowerCase().split(/\s+/).filter(Boolean);
-
+        
             const filtered = allRows.filter(row => {
                 const searchableText = `
-                ${row.Title}
-                ${row.Date}
-                ${row.Summary}
-                ${row.Authors}
-                ${row.Publisher}
+                ${row.Client_Collaborator}
+                ${row.Topic}
+                ${row.RoleCGC}
+                ${row.Year_CGC}
                 `.toLowerCase();
-
-                // every word must match somewhere
+        
                 return words.every(word => searchableText.includes(word));
             });
-
+        
             render(filtered);
         });
-
+        
+        
         function render(rows) {
-            const container = document.getElementById("containerProjects");
+            const container = document.getElementById("projectcontatiner");
             container.innerHTML = "";
-
+        
             rows.forEach(row => {
                 const card = document.createElement("div");
                 card.className = "card";
-
-                const title = document.createElement("div");
-                title.className = "title";
-                title.textContent = row.Title;
-
-                const date = document.createElement("div");
-                date.className = "date";
-                date.textContent = row.Date;
-
-                const summary = document.createElement("div");
-                summary.className = "summary";
-                summary.textContent = row.Summary;
-
-                const authors = document.createElement("div");
-                authors.className = "authors";
-                authors.textContent = 'Authors: ' + row.Authors;
-
-                const publisher = document.createElement("div");
-                publisher.className = "publisher";
-                publisher.textContent = 'By: ' + row.Publisher;
-
-                card.appendChild(title);
-                card.appendChild(date);
-                card.appendChild(summary);
-                card.appendChild(authors);
-                card.appendChild(publisher);
-
+        
+                const topic = document.createElement("div");
+                topic.className = "topic";
+                topic.textContent = row.Topic;
+        
+                const year = document.createElement("div");
+                year.className = "year";
+                year.textContent = row.Year_CGC;
+        
+                const role = document.createElement("div");
+                role.className = "role";
+                role.textContent = "Role: " + row.RoleCGC;
+        
+                const client = document.createElement("div");
+                client.className = "client";
+                client.textContent = "Client or Collaborator: " + row.Client_Collaborator;
+        
+        
+                card.appendChild(topic);
+                card.appendChild(year);
+                card.appendChild(role);
+                card.appendChild(client);
+        
                 container.appendChild(card);
-
             });
         }
-
-
     </script>
 
 

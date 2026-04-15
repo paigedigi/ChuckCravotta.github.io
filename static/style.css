@@ -114,7 +114,10 @@ a.button:hover {
   align-items: center;
 }
 
-
+.projecttitle {
+  font-size: 30px;
+  font-weight: 600;
+}
 
 .date {
   color: #666;
@@ -137,6 +140,45 @@ a.button:hover {
   color: #666;
   margin-bottom: 8px;
 }
+
+.link {
+  font-size: 1em;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+
+
+.topic {
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.year {
+  color: #666;
+  font-size: 0.9em;
+  margin-bottom: 8px;
+}
+
+.role {
+  font-size: 1em;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.client {
+  font-size: 1em;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.softwaredownload {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 
 /* ----- Responsive for Small Screens ----- */
 @media (max-width: 768px) {
