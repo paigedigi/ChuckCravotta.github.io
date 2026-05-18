@@ -223,6 +223,7 @@ a.button:hover {
   line-height: 1.4;
 }
 
+.keywords,
 .authors,
 .publisher {
   font-size: 0.85rem;
