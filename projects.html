@@ -1,105 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects</title>
-    <link rel="stylesheet" href="static/style.css">
-    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projects | Cravotta Geochemical Consulting</title>
+<meta name="description" content="Consulting and research projects of Cravotta Geochemical Consulting.">
+<link rel="icon" href="static/logo.jpg">
+<link rel="stylesheet" href="static/style.css">
 </head>
-
 <body>
-    <header class="header">
-        <div>
-            <h1 class="center title">Cravotta Geochemical Consulting, LLC (CGC)</h1>
-        </div>
-        <div class="pages">
-            <a href="index.html" class="button">Biography</a>
-            <a href="software.html" class="button">Software</a>
-            <a href="news.html" class="button">News</a>
-            <a href="projects.html" class="button">Projects</a>
-        </div>
-        <img src='static/logo.jpg' class="logo" alt="Logo">
-    </header>
-
-
-    <input
-        type="text"
-        id="searchProject"
-        placeholder="Search topic, year, client..."
-        style="margin-bottom: 16px; width: 300px;"
-    >
-        <div id="projectcontatiner"></div>
-    
-    <script>
-        let allRows = [];
-        
-        fetch("static/Cravotta_biblio.xlsx")
-        .then(response => response.arrayBuffer())
-        .then(data => {
-            const workbook = XLSX.read(data, { type: "array" });
-
-            const sheetName = "CGC_projects";
-            const sheet = workbook.Sheets[sheetName];
-
-            allRows = XLSX.utils.sheet_to_json(sheet).filter(r => r.Topic);
-
-            render(allRows);
-        });
-        
-        
-        document.getElementById("searchProject").addEventListener("input", function () {
-            const words = this.value.toLowerCase().split(/\s+/).filter(Boolean);
-        
-            const filtered = allRows.filter(row => {
-                const searchableText = `
-                ${row.Client_Collaborator}
-                ${row.Topic}
-                ${row.RoleCGC}
-                ${row.Year_CGC}
-                `.toLowerCase();
-        
-                return words.every(word => searchableText.includes(word));
-            });
-        
-            render(filtered);
-        });
-        
-        
-        function render(rows) {
-            const container = document.getElementById("projectcontatiner");
-            container.innerHTML = "";
-        
-            rows.forEach(row => {
-                const card = document.createElement("div");
-                card.className = "card";
-        
-                const topic = document.createElement("div");
-                topic.className = "topic";
-                topic.textContent = row.Topic;
-        
-                const year = document.createElement("div");
-                year.className = "year";
-                year.textContent = row.Year_CGC;
-        
-                const role = document.createElement("div");
-                role.className = "role";
-                role.textContent = "Role: " + row.RoleCGC;
-        
-                const client = document.createElement("div");
-                client.className = "client";
-                client.textContent = "Client or Collaborator: " + row.Client_Collaborator;
-        
-        
-                card.appendChild(topic);
-                card.appendChild(year);
-                card.appendChild(role);
-                card.appendChild(client);
-        
-                container.appendChild(card);
-            });
-        }
-    </script>
-
-
+<header class="site-header"><div class="wrap">
+  <a class="brand" href="index.html"><img src="static/logo.jpg" alt="CGC logo"><span>Cravotta Geochemical Consulting, LLC<small>Independent environmental &amp; water-quality consulting</small></span></a>
+  <nav aria-label="Main"><ul><li><a href="index.html">About</a></li><li><a href="projects.html" aria-current="page">Projects</a></li><li><a href="news.html">Publications</a></li><li><a href="software.html">Software</a></li></ul></nav>
+</div></header>
+<section class="hero page-hero"><div class="wrap"><h1>Projects</h1><p>Current and recent consulting, technical-specialist, and research-advising work.</p></div></section>
+<main class="wrap">
+  <div class="toolbar"><input class="search" id="search" type="search" placeholder="Search topic, client, year&hellip;" aria-label="Search projects"><span class="count" id="count"></span></div>
+  <div class="grid" id="container"><p class="empty">Loading&hellip;</p></div>
+</main>
+<footer><div class="wrap">&copy; <span id="yr"></span> Cravotta Geochemical Consulting, LLC. <!-- TODO: add contact email --></div></footer>
+<script>document.getElementById("yr").textContent=new Date().getFullYear();</script>
+<script src="static/data.js"></script>
+<script src="static/config.js"></script>
+<script src="static/loader.js"></script>
+<script>
+let allRows=[];
+const clean=v=>(v===undefined||v===null)?"":String(v).trim();
+loadRows(SITE_CONFIG.projectsCsv, window.PROJECT_DATA, "topic").then(rows=>{allRows=rows; render(allRows);});
+document.getElementById("search").addEventListener("input",function(){
+  const words=this.value.toLowerCase().split(/\s+/).filter(Boolean);
+  render(allRows.filter(r=>{const t=Object.values(r).join(" ").toLowerCase();return words.every(w=>t.includes(w));}));
+});
+function el(tag,cls,text){const e=document.createElement(tag); if(cls)e.className=cls; if(text)e.textContent=text; return e;}
+function render(rows){
+  const c=document.getElementById("container"); c.innerHTML="";
+  document.getElementById("count").textContent=rows.length+" project"+(rows.length===1?"":"s");
+  if(!rows.length){c.appendChild(el("p","empty","No matches found."));return;}
+  rows.forEach(r=>{
+    const card=el("article","card");
+    if(r.year) card.appendChild(el("span","badge",r.year));
+    card.appendChild(el("h3","",r.topic));
+    if(r.client) card.appendChild(el("p","meta","Client / collaborator: "+r.client));
+    if(r.role) card.appendChild(el("p","meta","Role: "+r.role));
+    c.appendChild(card);
+  });
+}
+</script>
 </body>
+</html>

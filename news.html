@@ -1,117 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>News</title>
-    <link rel="stylesheet" href="static/style.css">
-    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Publications | Cravotta Geochemical Consulting</title>
+<meta name="description" content="Publications and reports by Dr. Charles A. Cravotta III.">
+<link rel="icon" href="static/logo.jpg">
+<link rel="stylesheet" href="static/style.css">
 </head>
-
 <body>
-    <header class="header">
-        <div>
-            <h1 class="center title">Cravotta Geochemical Consulting, LLC (CGC)</h1>
-        </div>
-        <div class="pages">
-            <a href="index.html" class="button">Biography</a>
-            <a href="software.html" class="button">Software</a>
-            <a href="news.html" class="button">News</a>
-            <a href="projects.html" class="button">Projects</a>
-        </div>
-        <img src='static/logo.jpg' class="logo" alt="Logo">
-    </header>
-
-    <input
-        type="text"
-        id="search"
-        placeholder="Search title, date, summary..."
-        style="margin-bottom: 16px; width: 300px;"
-    >
-        <div id="container"></div>
-    
-    <script>
-        let allRows = [];
-        
-        fetch("static/Cravotta_biblio.xlsx")
-        .then(response => response.arrayBuffer())
-        .then(data => {
-            const workbook = XLSX.read(data, { type: "array" });
-
-            const sheetName = "CGC_news";
-            const sheet = workbook.Sheets[sheetName];
-
-            allRows = XLSX.utils.sheet_to_json(sheet).filter(r => r.Title);
-            console.log("Filtered rows:", allRows);
-            render(allRows);
-        });
-        
-        
-        document.getElementById("search").addEventListener("input", function () {
-            const words = this.value.toLowerCase().split(/\s+/).filter(Boolean);
-        
-            const filtered = allRows.filter(row => {
-                const searchableText = `
-                ${row.Title}
-                ${row.Date}
-                ${row.Keywords}
-                ${row.Authors}
-                ${row.Publisher}
-                ${row.Link}
-                `.toLowerCase();
-        
-                return words.every(word => searchableText.includes(word));
-            });
-        
-            render(filtered);
-        });
-        
-        
-        function render(rows) {
-            const container = document.getElementById("container");
-            container.innerHTML = "";
-        
-            rows.forEach(row => {
-                const card = document.createElement("div");
-                card.className = "card";
-        
-                const title = document.createElement("div");
-                title.className = "projecttitle";
-                title.textContent = row.Title;
-        
-                const date = document.createElement("div");
-                date.className = "date";
-                date.textContent = row.Date;
-        
-                const summary = document.createElement("div");
-                summary.className = "summary";
-                summary.textContent = row.Summary;
-        
-                const authors = document.createElement("div");
-                authors.className = "authors";
-                authors.textContent = "Authors: " + row.Authors;
-        
-                const publisher = document.createElement("div");
-                publisher.className = "publisher";
-                publisher.textContent = "By: " + row.Publisher;
-
-                const link = document.createElement("a");
-                link.className = "link";
-                link.href = row.Link;
-                link.textContent = "Read more";
-                link.target = "_blank";
-        
-                card.appendChild(title);
-                card.appendChild(date);
-                card.appendChild(summary);
-                card.appendChild(authors);
-                card.appendChild(publisher);
-                card.appendChild(link);
-        
-                container.appendChild(card);
-            });
-        }
-    </script>
-
-
+<header class="site-header"><div class="wrap">
+  <a class="brand" href="index.html"><img src="static/logo.jpg" alt="CGC logo"><span>Cravotta Geochemical Consulting, LLC<small>Independent environmental &amp; water-quality consulting</small></span></a>
+  <nav aria-label="Main"><ul><li><a href="index.html">About</a></li><li><a href="projects.html">Projects</a></li><li><a href="news.html" aria-current="page">Publications</a></li><li><a href="software.html">Software</a></li></ul></nav>
+</div></header>
+<section class="hero page-hero"><div class="wrap"><h1>Publications &amp; Reports</h1><p>Recent papers, reports, and manuscripts. Search by title, author, topic, or year.</p></div></section>
+<main class="wrap">
+  <div class="toolbar"><input class="search" id="search" type="search" placeholder="Search title, author, keyword, year&hellip;" aria-label="Search publications"><span class="count" id="count"></span></div>
+  <div class="list" id="container"><p class="empty">Loading&hellip;</p></div>
+</main>
+<footer><div class="wrap">&copy; <span id="yr"></span> Cravotta Geochemical Consulting, LLC. <!-- TODO: add contact email --></div></footer>
+<script>document.getElementById("yr").textContent=new Date().getFullYear();</script>
+<script src="static/data.js"></script>
+<script src="static/config.js"></script>
+<script src="static/loader.js"></script>
+<script>
+let allRows=[];
+const clean=v=>{ if(v===undefined||v===null) return ""; const s=String(v).trim(); return (s==="0"||s==="undefined")?"":s; };
+loadRows(SITE_CONFIG.publicationsCsv, window.NEWS_DATA, "title").then(rows=>{allRows=rows; render(allRows);});
+document.getElementById("search").addEventListener("input",function(){
+  const words=this.value.toLowerCase().split(/\s+/).filter(Boolean);
+  render(allRows.filter(r=>{const t=Object.values(r).join(" ").toLowerCase();return words.every(w=>t.includes(w));}));
+});
+function el(tag,cls,text){const e=document.createElement(tag); if(cls)e.className=cls; if(text)e.textContent=text; return e;}
+function render(rows){
+  const c=document.getElementById("container"); c.innerHTML="";
+  document.getElementById("count").textContent=rows.length+" result"+(rows.length===1?"":"s");
+  if(!rows.length){c.appendChild(el("p","empty","No matches found."));return;}
+  rows.forEach(r=>{
+    const card=el("article","card");
+    if(r.date) card.appendChild(el("span","badge",r.date));
+    card.appendChild(el("h3","",r.title));
+    if(r.authors) card.appendChild(el("p","meta",r.authors));
+    if(r.publisher) card.appendChild(el("p","meta",r.publisher));
+    if(r.keywords){const t=el("div","tags"); r.keywords.split(",").forEach(k=>{if(k.trim())t.appendChild(el("span","tag",k.trim()));}); card.appendChild(t);}
+    if(r.link && /^https?:/i.test(r.link)){const a=el("a","more","Read more →"); a.href=r.link; a.target="_blank"; a.rel="noopener"; card.appendChild(a);}
+    c.appendChild(card);
+  });
+}
+</script>
 </body>
+</html>
